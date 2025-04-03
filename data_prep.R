@@ -31,6 +31,10 @@ skyldig_kön_ålder_socialekonomisk_status_reshaped <- melt(data = skyldig_kön_
 skyldig_kön_ålder_socialekonomisk_status_reshaped <- skyldig_kön_ålder_socialekonomisk_status_reshaped %>% 
   rename(År = variable)
 
+# Saving as rds file
+skyldig_kön_ålder_socialekonomisk_status_reshaped %>% 
+  write_rds("Data/skyldig_kön_ålder_socialekonomisk.rds")
+
 
 ## URSPRUNG---------------------------------------------------------------------
 skyldig_kön_ålder_ursprung <- skyldig_kön_ålder_ursprung %>% 
@@ -48,6 +52,9 @@ skyldig_kön_ålder_ursprung_reshaped <- melt(data = skyldig_kön_ålder_ursprun
 skyldig_kön_ålder_ursprung_reshaped <- skyldig_kön_ålder_ursprung_reshaped %>% 
   rename(År = variable)
 
+skyldig_kön_ålder_ursprung_reshaped %>% 
+  write_rds("Data/skyldig_kön_ålder_ursprung.rds")
+
 ## ANMÄLDA OCH ÅTALADE-------------------------------------------------------- 
 anmälda_åtalade_region <- anmälda_åtalade_region %>%
   mutate(Händelse = factor(Händelse),
@@ -62,6 +69,9 @@ anmälda_åtalade_region_reshaped <- melt(data = anmälda_åtalade_region,
 anmälda_åtalade_region_reshaped <- anmälda_åtalade_region_reshaped %>% 
   rename(År = variable)
 
+anmälda_åtalade_region_reshaped %>% 
+  write_rds("Data/anmälda_åtalade_region.rds")
+
 ## ANTALET PERSONER PÅ BIDRAG PER URSPRUNGsland OCH KÖN--------------------------
 bidrag_ursprung_kön <- bidrag_ursprung_kön %>% 
   mutate(Ursprungsland = factor(Ursprungsland),
@@ -74,6 +84,9 @@ bidrag_ursprung_kön_reshaped <- melt(data = bidrag_ursprung_kön,
                                      id = c("Kön", "Ursprungsland", "Typ_av_bidrag")) %>% 
   rename(Kvartal = variable)
 
+bidrag_ursprung_kön_reshaped %>% 
+  write_rds("Data/bidrag_ursprung_kön.rds")
+
 ## HÄKTADE PERSONER PER KÖN, UTBILDNING OCH ÅLDER-------------------------------
 häktade_kön_ålder_utbildning <- häktade_kön_ålder_utbildning %>% 
   mutate(Utbildning = factor(Utbildning),
@@ -85,6 +98,9 @@ häktade_kön_ålder_utbildning_reshaped <- melt(häktade_kön_ålder_utbildning
                                               value.name = "Antalet_häktade",
                                               id = c("Utbildning", "Kön", "Ålder")) %>% 
   rename(År = variable)
+
+häktade_kön_ålder_utbildning_reshaped %>% 
+  write_rds("Data/häktade_kön_ålder.rds")
 
 
 
