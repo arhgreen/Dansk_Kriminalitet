@@ -5,8 +5,9 @@ execute:
   echo: false
   warning: false
   message: false
-
 editor: visual
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r libraries}
@@ -18,7 +19,7 @@ library(tidyverse)
 source("data_prep.R")
 ```
 
-```{r importing_data}
+```{r importing_data_SummaryStatistics}
 anmälda_åtalade_region <- read_rds("Data/anmälda_åtalade_region.rds")
 bidrag_ursprung_kön <- read_rds("Data/bidrag_ursprung_kön.rds")
 häktade_kön_ålder <- read_rds("Data/häktade_kön_ålder.rds")
@@ -27,3 +28,15 @@ skyldig_kön_ålder_ursprung <- read_rds("Data/skyldig_kön_ålder_ursprung.rds"
 
 ```
 
+```{r summary_statistics}
+#ANTAL ANMÄLNINGAR OCH ÅTAL PER REGION 
+anmälda_åtalade_region %>% 
+  group_by(Händelse, Region) %>% 
+  summarise(n = n(), 
+            Antal = sum(Anmälda_Åtalade)) %>% 
+  arrange(desc(Antal)) %>% 
+  gt() %>% 
+  opt_interactive()
+
+
+```
