@@ -1,12 +1,15 @@
 ---
-title: "Brott — En statistisk överblick av situationen i Danmark"
+title: "Sneglingen mot söder: Sveriges växande intresse för dansk kriminalpolitik – ideal, resultat och risker"
 author: "Aaron Green"
 date: "2025-04-06"
+language: 
+  title-block-author-single: "Författare"
+  title-block-published: "Publicerades"
 format:
   html:
     toc: true
     toc-location: left
-    toc-title: Table of contents
+    toc-title: Innehållsförteckning
     html-math-method: katex
 df-print: kable
 execute: 
@@ -67,7 +70,6 @@ Sammanfattningsvis visar Danmarks brottsstatistik en komplex bild där övergrip
 
 ```{r sexualbrott}
 anmälda_åtalade_region %>% 
-  mutate(År = as.Date(År)) %>% 
   filter(Brott == "Sexualbrott_totalt") %>% 
   ggplot() +
   geom_line(aes(x = År,
