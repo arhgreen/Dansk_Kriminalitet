@@ -1,19 +1,29 @@
 /* Advanced CSS for Elegant and Eye-Catching HTML Document */
 
 /* General Styles */
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
+
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: Arimo, Sans-Serif;
     color: #333;
     line-height: 1.6;
     background-color: #f4f7f6;
-    margin: 0;
+    margin-top: 3em;
     padding: 0 20px;
+}
+
+
+p {
+  font-size: 13pt;
+  margin: auto auto auto;
+  line-height: 26px;   /* within paragraph */
+  margin-bottom: 20px; /* between paragraphs */
 }
 
 h1, h2, h3, h4, h5, h6 {
     color: #0056b3;
-    margin-top: 0;
-    letter-spacing: 1px;
+    margin-top: 1.5em;
+    letter-spacing: 2px;
 }
 
 h1 {
@@ -32,9 +42,6 @@ h3 {
     font-size: 1em;
 }
 
-p {
-    margin: 0 0 15px;
-}
 
 /* Code and Preformatted Text */
 pre, code {
@@ -123,3 +130,4 @@ footer a:hover {
 .first-page h3 {
     font-size: 1.5em;
 }
+
