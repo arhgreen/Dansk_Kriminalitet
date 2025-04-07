@@ -10,7 +10,7 @@ skyldig_kön_ålder_ursprung <- read_excel("~/Documents/Dansk_Kriminalitet/RawDa
 anmälda_åtalade_region <- read_excel("~/Documents/Dansk_Kriminalitet/RawData/Danmark_stats_crime_socioeconomic.xlsx", 3)
 bidrag_ursprung_kön <- read_excel("~/Documents/Dansk_Kriminalitet/RawData/Danmark_stats_crime_socioeconomic.xlsx", 4)
 häktade_kön_ålder_utbildning <- read_excel("~/Documents/Dansk_Kriminalitet/RawData/Danmark_stats_crime_socioeconomic.xlsx", 5)
-
+arbetslösa_ålder_kön_region <- read_excel("~/Documents/Dansk_Kriminalitet/RawData/Danmark_stats_crime_socioeconomic.xlsx", 6)
 # Formating variables-----------------------------------------------------------
 
 ## SOCIOECONOMIC----------------------------------------------------------------
