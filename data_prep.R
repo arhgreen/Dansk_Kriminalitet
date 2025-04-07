@@ -103,7 +103,17 @@ häktade_kön_ålder_utbildning_reshaped %>%
   write_rds("Data/häktade_kön_ålder.rds")
 
 
+# ANTAL ARBETSLÖSA PER ÅLDER KÖN OCH REGION 
+arbetslösa_ålder_kön_region <- arbetslösa_ålder_kön_region %>% 
+  mutate(Ålder = factor(Ålder), 
+         Kön = factor(Kön),
+         Region = factor(Region))
 
+arbetslösa_ålder_kön_region <- melt(arbetslösa_ålder_kön_region,
+                                    na.rm = FALSE,
+                                    value.name = "Antal_arbetslösa",
+                                    id = c("Kön", "Ålder", "Region")) %>% 
+  rename(År = variable)
 
 
 
