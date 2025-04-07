@@ -147,7 +147,10 @@ Stöd till praktikplatser och lärlingsutbildningar i utsatta områden har ökat
 Kommunala satsningar såsom Jobcenters i ghettoområden har implementerats för att nå unga i riskzon.
 
 ## Sambandets betydelse för Sverige
-Eftersom arbetslösheten i vissa svenska utsatta områden är betydligt högre än Danmarks nationella snitt, är detta en viktig aspekt att beakta när man diskuterar överföring av danska brottsstrategier till svensk kontext. Ett ensidigt fokus på repressiva åtgärder utan att adressera arbetslöshetens roll kan begränsa effektiviteten i brottsförebyggandet.
+Eftersom arbetslösheten i vissa svenska utsatta områden är betydligt högre än Danmarks nationella snitt, är detta en viktig aspekt att beakta när man diskuterar överföring av danska brottsstrategier till svensk kontext. Ett ensidigt fokus på repressiva åtgärder utan att adressera arbetslöshetens roll kan begränsa effektiviteten i brottsförebyggandet. 
+```{r arbetslöshet}
+
+```
 
 # Källhänvisningar 
 * Newsoresund. (2023). Kraftig minskning av antalet anmälda brott. Hämtad från https://www.newsoresund.se/kraftig-minskning-av-antalet-anmalda-brott/?utm_source=chatgpt.com
