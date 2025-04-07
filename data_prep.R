@@ -115,7 +115,9 @@ arbetslösa_ålder_kön_region <- melt(arbetslösa_ålder_kön_region,
                                     id = c("Kön", "Ålder", "Region")) %>% 
   rename(År = variable)
 
-
+arbetslösa_ålder_kön_region %>% 
+  write_rds("Data/arbetslösa_ålder_kön_region.rds")
+rm(list = ls())
 
 
 
