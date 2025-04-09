@@ -37,7 +37,8 @@ bidrag_ursprung_kön <- read_rds("Data/bidrag_ursprung_kön.rds")
 häktade_kön_ålder <- read_rds("Data/häktade_kön_ålder.rds")
 skyldig_kön_ålder_socialekonomisk <- read_rds("Data/skyldig_kön_ålder_socialekonomisk.rds")
 skyldig_kön_ålder_ursprung <- read_rds("Data/skyldig_kön_ålder_ursprung.rds")
-
+skyldig_kön_ålder_ursprung <- read_rds("Data/skyldig_kön_ålder_ursprung.rds")
+arbetslösa_ålder_kön_region <- read_rds("Data/arbetslösa_ålder_kön_region.rds")
 ```
 
 ```{r summary_statistics, include=FALSE}
@@ -134,6 +135,24 @@ Enligt Danmarks Statistik låg den genomsnittliga arbetslösheten i landet på 2
 Ungdomsarbetslösheten (15–24 år) har däremot varit högre och låg 2023 på omkring 9 %, vilket indikerar en utsatt grupp med ökad sårbarhet för rekrytering till kriminella nätverk.
 Utsatthet som inkörsport till kriminalitet
 
+```{r arbetslöshet}
+test <- arbetslösa_ålder_kön_region %>% 
+  mutate(År = as.character(År))
+test <- test %>% 
+  mutate(År = as.Date(År, format = "%m-%Y"))
+
+#vec <- c("Nov - 16", "Apr - 18")
+#(o1 <- as.Date(paste("01", vec), format = "%d %b - %y"))
+# [1] "2016-11-01" "2018-04-01"
+#(o2 <- lubridate::dmy(paste("01", vec)))
+# [1] "2016-11-01" "2018-04-01"
+#(o3 <- zoo::as.yearmon(vec, "%b - %y"))
+# [1] "Nov 2016" "Apr 2018"
+#https://stackoverflow.com/questions/63108628/convert-a-column-having-abbreviated-month-year-format-to-date-type  
+  
+```
+
+
 Studier från Rockwool Fonden och Kriminalforsorgen i Danmark har visat att:
 
 Personer med låg utbildning, svag anknytning till arbetsmarknaden och som bor i socioekonomiskt utsatta bostadsområden löper betydligt högre risk att bli inblandade i kriminalitet.
@@ -148,9 +167,7 @@ Kommunala satsningar såsom Jobcenters i ghettoområden har implementerats för 
 
 ## Sambandets betydelse för Sverige
 Eftersom arbetslösheten i vissa svenska utsatta områden är betydligt högre än Danmarks nationella snitt, är detta en viktig aspekt att beakta när man diskuterar överföring av danska brottsstrategier till svensk kontext. Ett ensidigt fokus på repressiva åtgärder utan att adressera arbetslöshetens roll kan begränsa effektiviteten i brottsförebyggandet. 
-```{r arbetslöshet}
 
-```
 
 # Källhänvisningar 
 * Newsoresund. (2023). Kraftig minskning av antalet anmälda brott. Hämtad från https://www.newsoresund.se/kraftig-minskning-av-antalet-anmalda-brott/?utm_source=chatgpt.com
