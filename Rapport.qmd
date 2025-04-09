@@ -69,13 +69,22 @@ Inbrott har minskat kontinuerligt sedan 2009, med en nedgång på 36 procent i b
 
 Sammanfattningsvis visar Danmarks brottsstatistik en komplex bild där övergripande brottsnivåer minskar, men vissa brottstyper, särskilt bland ungdomar, har ökat. Dessa trender ger en nyanserad bild av effekterna av den danska kriminalpolitiken.
 
-```{r sexualbrott}
+```{r sexualbrott, dpi=50, out.width= "80%", out.height= "70%", fig.align='left'}
 anmälda_åtalade_region %>% 
+  mutate(Händelse = factor(Händelse, 
+                           labels = c("Anmälningar", "Åtalade"))) %>% 
   filter(Brott == "Sexualbrott_totalt") %>% 
-  ggplot() +
-  geom_line(aes(x = År,
-            y = Anmälda_Åtalade,
-            color = Händelse))
+  ggplot(aes(x = Händelse, 
+               y = Anmälda_Åtalade)) + 
+  geom_bar(position = "dodge",
+           stat = "identity",
+           fill = "cornflowerblue") +
+  labs(title = "Antal anmälningar och åtal för sexualbrott",
+       caption = "Source: Danmark Statistics",
+       x = "",
+       y = "Antal") +
+  ggthemes::theme_stata()
+  
 ```
 
 ## Gängrelaterad brottslighet
@@ -167,6 +176,8 @@ Kommunala satsningar såsom Jobcenters i ghettoområden har implementerats för 
 
 ## Sambandets betydelse för Sverige
 Eftersom arbetslösheten i vissa svenska utsatta områden är betydligt högre än Danmarks nationella snitt, är detta en viktig aspekt att beakta när man diskuterar överföring av danska brottsstrategier till svensk kontext. Ett ensidigt fokus på repressiva åtgärder utan att adressera arbetslöshetens roll kan begränsa effektiviteten i brottsförebyggandet. 
+
+
 
 
 # Källhänvisningar 
