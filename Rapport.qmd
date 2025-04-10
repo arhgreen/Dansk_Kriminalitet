@@ -81,7 +81,7 @@ anmälda_åtalade_region %>%
              fill = Händelse)) +
   geom_bar(position = "dodge",
            stat = "identity") +
-  scale_fill_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Paired") +
   labs(title = "Antal anmälningar och åtal om sexualbrott",
        subtitle = "mellan 2015 och 2024",
        x = "",
@@ -89,7 +89,7 @@ anmälda_åtalade_region %>%
        fill = "",
        caption = "Source: Danmarks Statistik") +
   ggthemes::theme_stata() +
-    theme(legend.position = "top") 
+  theme(legend.position = "top")
 ```
 
 ## Gängrelaterad brottslighet
