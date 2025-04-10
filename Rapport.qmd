@@ -53,6 +53,7 @@ anmälda_åtalade_region %>%
 
 
 ```
+
 # Inledning
 
 Under det senaste decenniet har dansk kriminalpolitik fått ett allt större genomslag i svensk politisk och medial diskurs. Särskilt i debatten om gängkriminalitet och trygghet lyfts Danmark återkommande fram som ett föregångsland – ett exempel på hur tydliga, strikta och konsekventa åtgärder kan skapa resultat. Bland de mest omtalade initiativen finns de hårda straff för gängbrott, utbyggnaden av restriktiva åtgärder såsom förlängd häktningstid, och den ökade användningen av elektronisk fotboja. Dessa åtgärder har ofta framhållits som framgångsrika verktyg i kampen mot organiserad brottslighet och har därmed inspirerat svenska politiker och debattörer att undersöka om en liknande politik skulle kunna ha positiva effekter även i Sverige.
@@ -69,22 +70,26 @@ Inbrott har minskat kontinuerligt sedan 2009, med en nedgång på 36 procent i b
 
 Sammanfattningsvis visar Danmarks brottsstatistik en komplex bild där övergripande brottsnivåer minskar, men vissa brottstyper, särskilt bland ungdomar, har ökat. Dessa trender ger en nyanserad bild av effekterna av den danska kriminalpolitiken.
 
-```{r sexualbrott, dpi=50, out.width= "80%", out.height= "70%", fig.align='left'}
+```{r sexualbrott, dpi=140}
+
 anmälda_åtalade_region %>% 
+  filter(Brott == "Sexualbrott_totalt") %>% 
   mutate(Händelse = factor(Händelse, 
                            labels = c("Anmälningar", "Åtalade"))) %>% 
-  filter(Brott == "Sexualbrott_totalt") %>% 
-  ggplot(aes(x = Händelse, 
-               y = Anmälda_Åtalade)) + 
+  ggplot(aes(x = År, 
+             y = Anmälda_Åtalade,
+             fill = Händelse)) +
   geom_bar(position = "dodge",
-           stat = "identity",
-           fill = "cornflowerblue") +
-  labs(title = "Antal anmälningar och åtal för sexualbrott",
-       caption = "Source: Danmark Statistics",
+           stat = "identity") +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(title = "Antal anmälningar och åtal om sexualbrott",
+       subtitle = "mellan 2015 och 2024",
        x = "",
-       y = "Antal") +
-  ggthemes::theme_stata()
-  
+       y = "Antal",
+       fill = "",
+       caption = "Source: Danmarks Statistik") +
+  ggthemes::theme_stata() +
+    theme(legend.position = "top") 
 ```
 
 ## Gängrelaterad brottslighet
@@ -136,13 +141,12 @@ Sveriges intresse för de danska metoderna reflekterar den växande oro som finn
 Det är klart att Danmark erbjuder värdefulla lärdomar för Sverige, men för att uppnå långsiktiga resultat måste svenska beslutsfattare vara medvetna om de unika omständigheterna i Sverige och noggrant överväga hur danska metoder kan anpassas. Det är också viktigt att Sverige fortsätter att balansera mellan straffåtgärder och brottsförebyggande insatser, där en holistisk och inkluderande strategi, som adresserar de bakomliggande orsakerna till brottslighet, kan vara nyckeln till ett tryggare och mer hållbart samhälle.
 
 # Sambandet mellan arbetslöshet och kriminalitet i Danmark
+
 Forskning har visat att det finns ett starkt samband mellan socioekonomiska faktorer, såsom arbetslöshet, och risken för individer att dras in i kriminalitet – särskilt bland unga i utsatta områden. Danmark är inget undantag, även om landet har haft relativt låg arbetslöshet jämfört med många andra europeiska länder.
 
 ## Arbetslöshet i Danmark: Statistik och utveckling
 
-Enligt Danmarks Statistik låg den genomsnittliga arbetslösheten i landet på 2,8 % i januari 2024, vilket är en liten ökning från 2,6 % i januari 2023 (dst.dk).
-Ungdomsarbetslösheten (15–24 år) har däremot varit högre och låg 2023 på omkring 9 %, vilket indikerar en utsatt grupp med ökad sårbarhet för rekrytering till kriminella nätverk.
-Utsatthet som inkörsport till kriminalitet
+Enligt Danmarks Statistik låg den genomsnittliga arbetslösheten i landet på 2,8 % i januari 2024, vilket är en liten ökning från 2,6 % i januari 2023 (dst.dk). Ungdomsarbetslösheten (15–24 år) har däremot varit högre och låg 2023 på omkring 9 %, vilket indikerar en utsatt grupp med ökad sårbarhet för rekrytering till kriminella nätverk. Utsatthet som inkörsport till kriminalitet
 
 ```{r arbetslöshet}
 test <- arbetslösa_ålder_kön_region %>% 
@@ -161,30 +165,26 @@ test <- test %>%
   
 ```
 
-
 Studier från Rockwool Fonden och Kriminalforsorgen i Danmark har visat att:
 
-Personer med låg utbildning, svag anknytning till arbetsmarknaden och som bor i socioekonomiskt utsatta bostadsområden löper betydligt högre risk att bli inblandade i kriminalitet.
-En arbetslös ungdom i ett socioekonomiskt belastat område har upp till fyra gånger högre risk att rekryteras till gäng än en sysselsatt individ med stabil familjebakgrund (rockwoolfonden.dk).
+Personer med låg utbildning, svag anknytning till arbetsmarknaden och som bor i socioekonomiskt utsatta bostadsområden löper betydligt högre risk att bli inblandade i kriminalitet. En arbetslös ungdom i ett socioekonomiskt belastat område har upp till fyra gånger högre risk att rekryteras till gäng än en sysselsatt individ med stabil familjebakgrund (rockwoolfonden.dk).
 
 ## Regeringens åtgärder mot socioekonomisk kriminalitet
+
 Som en del av Danmarks bredare strategi mot gängkriminalitet har man inte enbart fokuserat på straffrättsliga åtgärder, utan även på förebyggande socialpolitik:
 
-Projekt som Exit-programmen hjälper tidigare kriminella att återintegreras i arbetslivet.
-Stöd till praktikplatser och lärlingsutbildningar i utsatta områden har ökats.
-Kommunala satsningar såsom Jobcenters i ghettoområden har implementerats för att nå unga i riskzon.
+Projekt som Exit-programmen hjälper tidigare kriminella att återintegreras i arbetslivet. Stöd till praktikplatser och lärlingsutbildningar i utsatta områden har ökats. Kommunala satsningar såsom Jobcenters i ghettoområden har implementerats för att nå unga i riskzon.
 
 ## Sambandets betydelse för Sverige
-Eftersom arbetslösheten i vissa svenska utsatta områden är betydligt högre än Danmarks nationella snitt, är detta en viktig aspekt att beakta när man diskuterar överföring av danska brottsstrategier till svensk kontext. Ett ensidigt fokus på repressiva åtgärder utan att adressera arbetslöshetens roll kan begränsa effektiviteten i brottsförebyggandet. 
 
+Eftersom arbetslösheten i vissa svenska utsatta områden är betydligt högre än Danmarks nationella snitt, är detta en viktig aspekt att beakta när man diskuterar överföring av danska brottsstrategier till svensk kontext. Ett ensidigt fokus på repressiva åtgärder utan att adressera arbetslöshetens roll kan begränsa effektiviteten i brottsförebyggandet.
 
+# Källhänvisningar
 
+-   Newsoresund. (2023). Kraftig minskning av antalet anmälda brott. Hämtad från https://www.newsoresund.se/kraftig-minskning-av-antalet-anmalda-brott/?utm_source=chatgpt.com
 
-# Källhänvisningar 
-* Newsoresund. (2023). Kraftig minskning av antalet anmälda brott. Hämtad från https://www.newsoresund.se/kraftig-minskning-av-antalet-anmalda-brott/?utm_source=chatgpt.com
+-   SvD. (2020). Fler anmälningar om sexualbrott i Danmark. Hämtad från https://www.svd.se/a/EQb9ej/fler-anmalningar-om-sexualbrott-i-danmark?utm_source=chatgpt.com
 
-* SvD. (2020). Fler anmälningar om sexualbrott i Danmark. Hämtad från https://www.svd.se/a/EQb9ej/fler-anmalningar-om-sexualbrott-i-danmark?utm_source=chatgpt.com 
+-   SVT. (2013). Fler unga i Danmark begick brott efter att straffåldern sänkts. Hämtad från https://www.svt.se/nyheter/utrikes/fler-unga-i-danmark-begick-brott-efter-att-straffaldern-sanktes?utm_source=chatgpt.com
 
-* SVT. (2013). Fler unga i Danmark begick brott efter att straffåldern sänkts. Hämtad från https://www.svt.se/nyheter/utrikes/fler-unga-i-danmark-begick-brott-efter-att-straffaldern-sanktes?utm_source=chatgpt.com
-
-* Friatider. (2021). Danmark: Tredje världen-invandrare bakom vart tredje våldsbrott. Hämtad från https://www.friatider.se/danmark-tredje-varlden-invandrare-bakom-vart-tredje-valdsdad?utm_source=chatgpt.com
+-   Friatider. (2021). Danmark: Tredje världen-invandrare bakom vart tredje våldsbrott. Hämtad från https://www.friatider.se/danmark-tredje-varlden-invandrare-bakom-vart-tredje-valdsdad?utm_source=chatgpt.com
