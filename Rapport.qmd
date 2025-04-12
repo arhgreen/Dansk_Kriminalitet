@@ -28,7 +28,7 @@ library(gt)
 library(tidyverse)
 library(ggplot2)
 library(ggthemes)
-
+library(cowplot) # ggarange
 ```
 
 ```{r importing_data_SummaryStatistics}
@@ -71,7 +71,7 @@ Inbrott har minskat kontinuerligt sedan 2009, med en nedgång på 36 procent i b
 Sammanfattningsvis visar Danmarks brottsstatistik en komplex bild där övergripande brottsnivåer minskar, men vissa brottstyper, särskilt bland ungdomar, har ökat. Dessa trender ger en nyanserad bild av effekterna av den danska kriminalpolitiken.
 
 ```{r sexualbrott, dpi=140}
-
+# Alla sexualbrott
 anmälda_åtalade_region %>% 
   filter(Brott == "Sexualbrott_totalt") %>% 
   mutate(Händelse = factor(Händelse, 
@@ -89,7 +89,57 @@ anmälda_åtalade_region %>%
        fill = "",
        caption = "Source: Danmarks Statistik") +
   ggthemes::theme_stata() +
-  theme(legend.position = "top")
+  theme(legend.position = "bottom")
+
+# Sexualbrott mot barn under 15 år. 
+anmälda_åtalade_region %>% 
+  filter(Brott == "Sexualbrott_mot_barn_under15") %>% 
+  mutate(Händelse = factor(Händelse, 
+                           labels = c("Anmälningar", "Åtalade"))) %>% 
+  ggplot(aes(x = År, 
+             y = Anmälda_Åtalade,
+             fill = Händelse)) +
+  geom_bar(position = "dodge",
+           stat = "identity") +
+  scale_fill_brewer(palette = "Paired") +
+  labs(title = "Antal anmälningar och åtal om sexualbrott mot barn under 15 år",
+       x = "",
+       y = "Antal",
+       fill = "",
+       caption = "Source: Danmarks Statistik") +
+  ggthemes::theme_stata() +
+  theme(legend.position = "bottom")
+
+```
+
+```{r våldsbrott}
+anmälda_åtalade_region %>% 
+    mutate(Händelse = factor(Händelse, 
+                           labels = c("Anmälningar", "Åtalade"))) %>% 
+  filter(Brott == "Våldsbrott") %>% 
+  ggplot(aes(x = År, 
+             y = Anmälda_Åtalade,
+             fill = Händelse)) +
+  geom_bar(position = "dodge",
+           stat = "identity") +
+  scale_fill_brewer(palette = "Paired") +
+  labs(x = "",
+       y = "Antal",
+       title = "Antal anmälningar och åtal om Våldsbrott",
+       caption = "Source: Danmarks Statistik", 
+       fill = "") +
+  ggthemes::theme_stata() +
+  theme(legend.position = "bottom")
+
+library(zoo)
+test <- arbetslösa_ålder_kön_region %>% 
+  mutate(År = zoo::as.yearmon(År, "%m-%y"))
+str(test)
+```
+
+
+```{r brottcategoriernas_utveckling}
+
 ```
 
 ## Gängrelaterad brottslighet
