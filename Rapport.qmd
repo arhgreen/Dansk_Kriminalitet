@@ -47,7 +47,7 @@ skyldig_kön_ålder_ursprung <- read_rds("Data/skyldig_kön_ålder_ursprung.rds"
 arbetslösa_ålder_kön_region <- read_rds("Data/arbetslösa_ålder_kön_region.rds")
 ```
 
-```{r summary_statistics, include=FALSE}
+```{r summary_statistics}
 #ANTAL ANMÄLNINGAR OCH ÅTAL PER REGION 
 anmälda_åtalade_region %>% 
   mutate(Händelse = factor(Händelse,
@@ -56,14 +56,29 @@ anmälda_åtalade_region %>%
   summarise(Antal = sum(Anmälda_Åtalade)) %>% 
   arrange(desc(Antal)) %>% 
   reactable::reactable(groupBy = "Händelse",
+                       defaultExpanded = FALSE,
+                       rowStyle = JS("function(rowInfo) {
+    if (rowInfo.level == 0) {
+      return { background: '#f4f7f6', 
+      borderLeft: '2px solid #2db5ff' }
+    }
+  }"),
                        columns = list(Antal = colDef(aggregate = "sum",
-                                                     format = colFormat(separators = TRUE)))) %>% 
+                                                     format = colFormat(separators = TRUE),
+                                                     footer = JS("function(column, state) {
+        let total = 0
+        state.sortedData.forEach(function(row) {
+          total += row[column.id]
+        })
+        return total}")),
+                                      Region = colDef(searchable = TRUE,
+                                                      filterable = TRUE))) %>% 
   add_title(title = "Antal personer anmälda och åtalade för brott",
             font_color = "black",
-            font_size = 22) %>% 
+            font_size = 18) %>% 
   add_subtitle(subtitle = "mellan 2015-2024",
                font_weight = "normal",
-               font_size = 18)
+               font_size = 14)
 
 
 ```
