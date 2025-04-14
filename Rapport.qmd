@@ -53,27 +53,22 @@ anmälda_åtalade_region %>%
   mutate(Händelse = factor(Händelse,
                            labels = c("Anmälda brott", "Åtalade"))) %>% 
   group_by(Händelse, Region) %>% 
-  summarise(Antal = sum(Anmälda_Åtalade)) %>% 
+  summarise(Antal = sum(Anmälda_Åtalade),
+            .groups = "drop") %>% 
   arrange(desc(Antal)) %>% 
   reactable::reactable(groupBy = "Händelse",
                        defaultExpanded = FALSE,
                        rowStyle = JS("function(rowInfo) {
     if (rowInfo.level == 0) {
-      return { background: '#f4f7f6', 
+      return { background: '#E7EDF3', 
       borderLeft: '2px solid #2db5ff' }
     }
   }"),
                        columns = list(Antal = colDef(aggregate = "sum",
-                                                     format = colFormat(separators = TRUE),
-                                                     footer = JS("function(column, state) {
-        let total = 0
-        state.sortedData.forEach(function(row) {
-          total += row[column.id]
-        })
-        return total}")),
+                                                     format = colFormat(separators = TRUE)),
                                       Region = colDef(searchable = TRUE,
                                                       filterable = TRUE))) %>% 
-  add_title(title = "Antal personer anmälda och åtalade för brott",
+  add_title(title = "Antal personer anmälda och åtalade för brott per händelse, region",
             font_color = "black",
             font_size = 18) %>% 
   add_subtitle(subtitle = "mellan 2015-2024",
