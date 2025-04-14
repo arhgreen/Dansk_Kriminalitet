@@ -97,42 +97,48 @@ Sammanfattningsvis visar Danmarks brottsstatistik en komplex bild där övergrip
 ```{r sexualbrott, dpi=140}
 # Alla sexualbrott
 anmälda_åtalade_region %>% 
-  filter(Brott == "Sexualbrott_totalt") %>% 
+  filter(Brott == "Samtliga sexualbrott") %>% 
   mutate(Händelse = factor(Händelse, 
                            labels = c("Anmälningar", "Åtalade"))) %>% 
   ggplot(aes(x = År, 
              y = Anmälda_Åtalade,
              fill = Händelse)) +
-  geom_bar(position = "dodge",
-           stat = "identity") +
+  geom_bar(stat = "identity",
+           position = "dodge") +
   scale_fill_brewer(palette = "Paired") +
+  scale_x_discrete(labels = c(2015, 2016, 2017, 2018, 2019,
+                              2020, 2021, 2022, 2023, 2024)) +
   labs(title = "Antal anmälningar och åtal om sexualbrott",
        subtitle = "mellan 2015 och 2024",
        x = "",
        y = "Antal",
        fill = "",
-       caption = "Source: Danmarks Statistik") +
+       caption = "Källa: Danmarks Statistik") +
   ggthemes::theme_stata() +
   theme(legend.position = "bottom")
 
 # Sexualbrott mot barn under 15 år. 
 anmälda_åtalade_region %>% 
-  filter(Brott == "Sexualbrott_mot_barn_under15") %>% 
+  filter(Brott == "Sexualbrott mot barn under 15 år") %>% 
   mutate(Händelse = factor(Händelse, 
                            labels = c("Anmälningar", "Åtalade"))) %>% 
   ggplot(aes(x = År, 
              y = Anmälda_Åtalade,
              fill = Händelse)) +
-  geom_bar(position = "dodge",
-           stat = "identity") +
+  geom_bar(stat = "identity",
+           position = "dodge") +
   scale_fill_brewer(palette = "Paired") +
+  scale_x_discrete(labels = c(2015, 2016, 2017, 2018, 2019,
+                              2020, 2021, 2022, 2023, 2024)) +
   labs(title = "Antal anmälningar och åtal om sexualbrott mot barn under 15 år",
        x = "",
        y = "Antal",
        fill = "",
-       caption = "Source: Danmarks Statistik") +
+       caption = "Källa: Danmarks Statistik") +
   ggthemes::theme_stata() +
   theme(legend.position = "bottom")
+
+
 
 ```
 
@@ -173,6 +179,7 @@ test %>%
 
 
 ```{r brottcategoriernas_utveckling}
+## Förändring från 2023-2024
 
 ```
 
