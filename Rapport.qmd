@@ -30,6 +30,8 @@ library(ggplot2)
 library(ggthemes)
 library(reactable) # tables 
 library(reactablefmtr) # tables
+library(ggraph) #plot interactivity
+library(plotly)
 ```
 
 
@@ -96,10 +98,11 @@ Sammanfattningsvis visar Danmarks brottsstatistik en komplex bild där övergrip
 
 ```{r sexualbrott, dpi=140}
 # Alla sexualbrott
+anmälda_åtalade_region <- anmälda_åtalade_region %>% 
+  mutate(Händelse = factor(Händelse))
+
 anmälda_åtalade_region %>% 
   filter(Brott == "Samtliga sexualbrott") %>% 
-  mutate(Händelse = factor(Händelse, 
-                           labels = c("Anmälningar", "Åtalade"))) %>% 
   ggplot(aes(x = År, 
              y = Anmälda_Åtalade,
              fill = Händelse)) +
@@ -119,9 +122,7 @@ anmälda_åtalade_region %>%
 
 # Sexualbrott mot barn under 15 år. 
 anmälda_åtalade_region %>% 
-  filter(Brott == "Sexualbrott mot barn under 15 år") %>% 
-  mutate(Händelse = factor(Händelse, 
-                           labels = c("Anmälningar", "Åtalade"))) %>% 
+  filter(Brott == "Sexualbrott mot barn under 15") %>% 
   ggplot(aes(x = År, 
              y = Anmälda_Åtalade,
              fill = Händelse)) +
@@ -139,7 +140,30 @@ anmälda_åtalade_region %>%
   theme(legend.position = "bottom")
 
 
-
+gv <- anmälda_åtalade_region %>% 
+   filter(Brott == "Sexualbrott mot barn under 15",
+         Händelse == "Anmälda brott") %>% 
+  mutate(År = factor(År)) %>% 
+  select(Händelse, År, Anmälda_Åtalade) %>% 
+  group_by(År) %>% 
+   summarise(Antal = sum(Anmälda_Åtalade)) %>% 
+  ggplot(aes(x = År,
+              y = Antal,
+              group = 1)) +
+  geom_point(size = 1,
+             colour = "dodgerblue") +
+  geom_line(colour = "dodgerblue",
+            linewidth = 0.8) +
+  scale_x_discrete(labels = c(2015, 2016, 2017, 2018, 2019, 
+                              2020, 2021, 2022, 2023, 2024)) +
+  scale_y_continuous(limits = c(0,1500),
+                     breaks = c(0, 300, 600, 900, 1200, 1500)) +
+  ggthemes::theme_stata() +
+  labs(title = "Antal anmälning om sexual brott mot barn under 15 år",
+       caption = "Källa: Danmarks Statistik",
+       x = "",
+       y = "Antal")
+ggplotly(gv)
 ```
 
 ```{r våldsbrott}
@@ -161,18 +185,6 @@ anmälda_åtalade_region %>%
   ggthemes::theme_stata() +
   theme(legend.position = "bottom")
 
-library(zoo)
-test <- arbetslösa_ålder_kön_region %>% 
-  mutate(År = lubridate::my(År))
-str(test)
-
-test %>% 
-  filter(Region == "All Denmark",
-         Ålder == "Alla_åldrar") %>% 
-  ggplot(aes(x = År, 
-           y = Antal_arbetslösa)) +
-  geom_line(aes(colour = Kön)) + 
-  ggthemes::theme_stata()
   
   
 ```
