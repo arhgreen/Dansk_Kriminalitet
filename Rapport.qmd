@@ -1,7 +1,7 @@
 ---
 title: "Sneglingen mot söder: Sveriges växande intresse för dansk kriminalpolitik – ideal, resultat och risker"
 author: "Aaron H. Green"
-date: "2025-04-08"
+date: ""
 language: 
   title-block-author-single: "Författare"
   title-block-published: "Publicerades"
