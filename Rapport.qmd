@@ -28,7 +28,16 @@ library(gt)
 library(tidyverse)
 library(ggplot2)
 library(ggthemes)
+library(reactable) # tables 
+library(reactablefmtr) # tables
+library(ggiraph) #plot interactivity
+library(plotly)
+library(patchwork) #side by side plots
+```
 
+
+```{r source_data_prep}
+source("RawData/data_prep.R")
 ```
 
 ```{r importing_data_SummaryStatistics}
@@ -41,15 +50,33 @@ skyldig_kön_ålder_ursprung <- read_rds("Data/skyldig_kön_ålder_ursprung.rds"
 arbetslösa_ålder_kön_region <- read_rds("Data/arbetslösa_ålder_kön_region.rds")
 ```
 
-```{r summary_statistics, include=FALSE}
+```{r summary_statistics}
 #ANTAL ANMÄLNINGAR OCH ÅTAL PER REGION 
 anmälda_åtalade_region %>% 
+  mutate(Händelse = factor(Händelse,
+                           labels = c("Anmälda brott", "Åtalade"))) %>% 
   group_by(Händelse, Region) %>% 
-  summarise(n = n(), 
-            Antal = sum(Anmälda_Åtalade)) %>% 
+  summarise(Antal = sum(Anmälda_Åtalade),
+            .groups = "drop") %>% 
   arrange(desc(Antal)) %>% 
-  gt() %>% 
-  opt_interactive()
+  reactable::reactable(groupBy = "Händelse",
+                       defaultExpanded = FALSE,
+                       rowStyle = JS("function(rowInfo) {
+    if (rowInfo.level == 0) {
+      return { background: '#E7EDF3', 
+      borderLeft: '2px solid #2db5ff' }
+    }
+  }"),
+                       columns = list(Antal = colDef(aggregate = "sum",
+                                                     format = colFormat(separators = TRUE)),
+                                      Region = colDef(searchable = TRUE,
+                                                      filterable = TRUE))) %>% 
+  add_title(title = "Antal personer anmälda och åtalade för brott per händelse, region",
+            font_color = "black",
+            font_size = 18) %>% 
+  add_subtitle(subtitle = "mellan 2015-2024",
+               font_weight = "normal",
+               font_size = 14)
 
 
 ```
@@ -70,26 +97,104 @@ Inbrott har minskat kontinuerligt sedan 2009, med en nedgång på 36 procent i b
 
 Sammanfattningsvis visar Danmarks brottsstatistik en komplex bild där övergripande brottsnivåer minskar, men vissa brottstyper, särskilt bland ungdomar, har ökat. Dessa trender ger en nyanserad bild av effekterna av den danska kriminalpolitiken.
 
-```{r sexualbrott, dpi=140}
+```{r sexualbrott, fig.height=6, fig.width=12.5}
+# Alla sexualbrott
+anmälda_åtalade_region <- anmälda_åtalade_region %>% 
+  mutate(Händelse = factor(Händelse))
+
+samtliga_brott <- anmälda_åtalade_region %>% 
+  filter(Brott == "Samtliga sexualbrott") %>% 
+  ggplot(aes(x = År, 
+             y = Anmälda_Åtalade,
+             fill = Händelse)) +
+  geom_bar_interactive(aes(tooltip = Anmälda_Åtalade),stat = "identity",
+           position = "dodge") +
+  scale_fill_brewer(palette = "Paired") +
+  scale_x_discrete(labels = c(2015, 2016, 2017, 2018, 2019,
+                              2020, 2021, 2022, 2023, 2024)) +
+  labs(title = "Anmälningar och åtal om samtliga sexualbrott",
+       x = "",
+       y = "Antal",
+       fill = "",
+       caption = "Källa: Danmarks Statistik") +
+  ggthemes::theme_stata() +
+  theme(legend.position = "bottom")
+
+# Sexualbrott mot barn under 15 år. 
+sexualbrott_under15 <- anmälda_åtalade_region %>% 
+  filter(Brott == "Sexualbrott mot barn under 15") %>% 
+  ggplot(aes(x = År, 
+             y = Anmälda_Åtalade,
+             fill = Händelse)) +
+  geom_bar_interactive(aes(tooltip = Anmälda_Åtalade),stat = "identity",
+           position = "dodge") +
+  scale_fill_brewer(palette = "Paired") +
+  scale_x_discrete(labels = c(2015, 2016, 2017, 2018, 2019,
+                              2020, 2021, 2022, 2023, 2024)) +
+  labs(title = "Anmälningar och åtal om sexualbrott mot barn under 15 år",
+       x = "",
+       y = "Antal",
+       fill = "",
+       caption = "Källa: Danmarks Statistik") +
+  ggthemes::theme_stata() +
+  theme(legend.position = "bottom")
+
+sexualbrott <- samtliga_brott + sexualbrott_under15
+girafe(ggobj = sexualbrott)
 
 anmälda_åtalade_region %>% 
-  filter(Brott == "Sexualbrott_totalt") %>% 
-  mutate(Händelse = factor(Händelse, 
+   filter(Brott == "Sexualbrott mot barn under 15",
+         Händelse == "Anmälda brott") %>% 
+  mutate(År = factor(År)) %>% 
+  select(Händelse, År, Anmälda_Åtalade) %>% 
+  group_by(År) %>% 
+   summarise(Antal = sum(Anmälda_Åtalade)) %>% 
+  ggplot(aes(x = År,
+              y = Antal,
+              group = 1)) +
+  geom_point_interactive(aes(tooltip=År),size = 1,
+             colour = "dodgerblue") +
+  geom_line(colour = "dodgerblue",
+            linewidth = 0.8) +
+  scale_x_discrete(labels = c(2015, 2016, 2017, 2018, 2019, 
+                              2020, 2021, 2022, 2023, 2024)) +
+  scale_y_continuous(limits = c(0,1500),
+                     breaks = c(0, 300, 600, 900, 1200, 1500)) +
+  ggthemes::theme_stata() +
+  labs(title = "Antal anmälning om sexual brott mot barn under 15 år",
+       caption = "Källa: Danmarks Statistik",
+       x = "",
+       y = "Antal")
+
+```
+
+```{r våldsbrott}
+anmälda_åtalade_region %>% 
+    mutate(Händelse = factor(Händelse, 
                            labels = c("Anmälningar", "Åtalade"))) %>% 
+  filter(Brott == "Våldsbrott") %>% 
   ggplot(aes(x = År, 
              y = Anmälda_Åtalade,
              fill = Händelse)) +
   geom_bar(position = "dodge",
            stat = "identity") +
-  scale_fill_brewer(palette = "Dark2") +
-  labs(title = "Antal anmälningar och åtal om sexualbrott",
-       subtitle = "mellan 2015 och 2024",
-       x = "",
+  scale_fill_brewer(palette = "Paired") +
+  labs(x = "",
        y = "Antal",
-       fill = "",
-       caption = "Source: Danmarks Statistik") +
+       title = "Antal anmälningar och åtal om Våldsbrott",
+       caption = "Source: Danmarks Statistik", 
+       fill = "") +
   ggthemes::theme_stata() +
-    theme(legend.position = "top") 
+  theme(legend.position = "bottom")
+
+  
+  
+```
+
+
+```{r brottcategoriernas_utveckling}
+## Förändring från 2023-2024
+
 ```
 
 ## Gängrelaterad brottslighet
