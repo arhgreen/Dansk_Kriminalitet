@@ -33,6 +33,7 @@ library(reactablefmtr) # tables
 library(ggiraph) #plot interactivity
 library(plotly)
 library(patchwork) #side by side plots
+library(reshape2)
 ```
 
 ```{r source_data_prep}
