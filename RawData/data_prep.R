@@ -57,7 +57,8 @@ skyldig_kön_ålder_ursprung_reshaped %>%
 
 ## ANMÄLDA OCH ÅTALADE-------------------------------------------------------- 
 anmälda_åtalade_region <- anmälda_åtalade_region %>%
-  mutate(Händelse = factor(Händelse),
+  mutate(Händelse = factor(Händelse,
+                           labels = c("Anmälda brott", "Lagförda")),
          Brott = factor(Brott),
          Region = factor(Region))
 
