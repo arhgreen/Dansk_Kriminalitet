@@ -1,10 +1,10 @@
 ---
 title: "Sneglingen mot söder: Sveriges växande intresse för dansk kriminalpolitik – ideal, resultat och risker"
 author: "Aaron H. Green"
-date: "2025-04-08"
+date: ""
 language: 
   title-block-author-single: "Författare"
-  title-block-published: "Publicerades"
+  title-block-published: ""
 format:
   html:
     toc: true
@@ -33,6 +33,7 @@ library(reactablefmtr) # tables
 library(ggiraph) #plot interactivity
 library(plotly)
 library(patchwork) #side by side plots
+library(reactablefmtr)
 ```
 
 
@@ -50,7 +51,21 @@ skyldig_kön_ålder_ursprung <- read_rds("Data/skyldig_kön_ålder_ursprung.rds"
 arbetslösa_ålder_kön_region <- read_rds("Data/arbetslösa_ålder_kön_region.rds")
 ```
 
-```{r summary_statistics}
+# Inledning
+
+Under det senaste decenniet har dansk kriminalpolitik fått ett allt större genomslag i svensk politisk och medial diskurs. Särskilt i debatten om gängkriminalitet och trygghet lyfts Danmark återkommande fram som ett föregångsland – ett exempel på hur tydliga, strikta och konsekventa åtgärder kan skapa resultat. Bland de mest omtalade initiativen finns de hårda straff för gängbrott, utbyggnaden av restriktiva åtgärder såsom förlängd häktningstid, och den ökade användningen av elektronisk fotboja. Dessa åtgärder har ofta framhållits som framgångsrika verktyg i kampen mot organiserad brottslighet och har därmed inspirerat svenska politiker och debattörer att undersöka om en liknande politik skulle kunna ha positiva effekter även i Sverige.
+
+Men vad ligger bakom detta intensiva intresse? Är det Danmarks upplevda effektivitet som lockar, eller är det snarare ett uttryck för en svensk längtan efter kontroll i en tid av samhällsförändring och ökad otrygghet? Och kanske viktigast av allt – har den danska modellen verkligen haft positiva effekter?
+
+Denna rapport syftar till att nyanserat och evidensbaserat undersöka just detta: i vilken utsträckning har Danmarks kriminalpolitiska linje påverkat brottsutvecklingen, rättsväsendets funktion och samhällsklimatet? Genom att kombinera statistik, policyanalyser och aktuell forskning granskas den danska strategin – inte som idealbild, utan som föremål för kritisk analys. Särskild uppmärksamhet ägnas åt de specifika åtgärderna som Danmark genomfört, såsom tuffare strafflagstiftning, utökad användning av preventiv frihetsberövning och intensifierad gränskontroll, för att bedöma om dessa politiska val har lett till en verklig minskning av brottsligheten eller om de enbart har skapat ett illusion av ökad trygghet.
+
+# Brottsstatistik i Danmark
+
+Danmark har uppvisat en övergripande nedgång i antalet anmälda brott, vilket ofta tillskrivs landets strikta kriminalpolitik. Enligt Danmarks Statistik minskade antalet anmälda brott med 17 procent mellan 2009 och 2019 (Newsoresund, 2023). Samtidigt har vissa brottstyper ökat. Antalet anmälningar om sexualbrott steg med 16 procent under 2019 jämfört med föregående år, där våldtäktsanmälningarna ökade med 88 procent (SvD, 2020). Forskare som utvärderat effekterna av sänkningen av straffmyndighetsåldern till 14 år 2010, följt av en återställning till 15 år 2012, noterar att ungdomsbrottsligheten ökade snarare än minskade under perioden med sänkt straffålder (SVT, 2013).
+
+```{r}
+#|label: anmälda_åtalade
+#| tab-alt: "A line plot on a polar axis"
 #ANTAL ANMÄLNINGAR OCH ÅTAL PER REGION 
 anmälda_åtalade_region %>% 
   mutate(Händelse = factor(Händelse,
@@ -71,33 +86,20 @@ anmälda_åtalade_region %>%
                                                      format = colFormat(separators = TRUE)),
                                       Region = colDef(searchable = TRUE,
                                                       filterable = TRUE))) %>% 
-  add_title(title = "Antal personer anmälda och åtalade för brott per händelse, region",
-            font_color = "black",
-            font_size = 18) %>% 
-  add_subtitle(subtitle = "mellan 2015-2024",
-               font_weight = "normal",
-               font_size = 14)
-
+  add_source(source = "Källa: Danmarks Statistik",
+             font_style = "italic",
+             font_weight = "bold",
+             font_size = 11,
+             align = "right")
+     
 
 ```
-
-# Inledning
-
-Under det senaste decenniet har dansk kriminalpolitik fått ett allt större genomslag i svensk politisk och medial diskurs. Särskilt i debatten om gängkriminalitet och trygghet lyfts Danmark återkommande fram som ett föregångsland – ett exempel på hur tydliga, strikta och konsekventa åtgärder kan skapa resultat. Bland de mest omtalade initiativen finns de hårda straff för gängbrott, utbyggnaden av restriktiva åtgärder såsom förlängd häktningstid, och den ökade användningen av elektronisk fotboja. Dessa åtgärder har ofta framhållits som framgångsrika verktyg i kampen mot organiserad brottslighet och har därmed inspirerat svenska politiker och debattörer att undersöka om en liknande politik skulle kunna ha positiva effekter även i Sverige.
-
-Men vad ligger bakom detta intensiva intresse? Är det Danmarks upplevda effektivitet som lockar, eller är det snarare ett uttryck för en svensk längtan efter kontroll i en tid av samhällsförändring och ökad otrygghet? Och kanske viktigast av allt – har den danska modellen verkligen haft positiva effekter?
-
-Denna rapport syftar till att nyanserat och evidensbaserat undersöka just detta: i vilken utsträckning har Danmarks kriminalpolitiska linje påverkat brottsutvecklingen, rättsväsendets funktion och samhällsklimatet? Genom att kombinera statistik, policyanalyser och aktuell forskning granskas den danska strategin – inte som idealbild, utan som föremål för kritisk analys. Särskild uppmärksamhet ägnas åt de specifika åtgärderna som Danmark genomfört, såsom tuffare strafflagstiftning, utökad användning av preventiv frihetsberövning och intensifierad gränskontroll, för att bedöma om dessa politiska val har lett till en verklig minskning av brottsligheten eller om de enbart har skapat ett illusion av ökad trygghet.
-
-# Brottsstatistik i Danmark
-
-Danmark har uppvisat en övergripande nedgång i antalet anmälda brott, vilket ofta tillskrivs landets strikta kriminalpolitik. Enligt Danmarks Statistik minskade antalet anmälda brott med 17 procent mellan 2009 och 2019 (Newsoresund, 2023). Samtidigt har vissa brottstyper ökat. Antalet anmälningar om sexualbrott steg med 16 procent under 2019 jämfört med föregående år, där våldtäktsanmälningarna ökade med 88 procent (SvD, 2020). Forskare som utvärderat effekterna av sänkningen av straffmyndighetsåldern till 14 år 2010, följt av en återställning till 15 år 2012, noterar att ungdomsbrottsligheten ökade snarare än minskade under perioden med sänkt straffålder (SVT, 2013).
-
+@tbl-anmälda_åtalade
 Inbrott har minskat kontinuerligt sedan 2009, med en nedgång på 36 procent i bostadsinbrott (Newsoresund, 2023). Dock indikerar statistik att invandrare från icke-västerländska länder är överrepresenterade i vissa brottstyper, vilket har lett till politiska diskussioner om invandringens påverkan på brottsligheten (Friatider, 2021).
 
 Sammanfattningsvis visar Danmarks brottsstatistik en komplex bild där övergripande brottsnivåer minskar, men vissa brottstyper, särskilt bland ungdomar, har ökat. Dessa trender ger en nyanserad bild av effekterna av den danska kriminalpolitiken.
 
-```{r sexualbrott, fig.height=6, fig.width=12.5}
+```{r sexualbrott, fig.height=6, fig.width=12.5, dpi=600}
 # Alla sexualbrott
 anmälda_åtalade_region <- anmälda_åtalade_region %>% 
   mutate(Händelse = factor(Händelse))
