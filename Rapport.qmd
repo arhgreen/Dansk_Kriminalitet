@@ -143,7 +143,7 @@ sexualbrott_under15 <- anmälda_åtalade_region %>%
 sexualbrott <- samtliga_brott + sexualbrott_under15
 girafe(ggobj = sexualbrott)
 
-anmälda_åtalade_region %>% 
+mot_barn <- anmälda_åtalade_region %>% 
    filter(Brott == "Sexualbrott mot barn under 15",
          Händelse == "Anmälda brott") %>% 
   mutate(År = factor(År)) %>% 
@@ -153,7 +153,7 @@ anmälda_åtalade_region %>%
   ggplot(aes(x = År,
               y = Antal,
               group = 1)) +
-  geom_point_interactive(aes(tooltip=År),size = 1,
+  geom_point_interactive(aes(tooltip=Antal),size = 1,
              colour = "dodgerblue") +
   geom_line(colour = "dodgerblue",
             linewidth = 0.8) +
@@ -166,7 +166,7 @@ anmälda_åtalade_region %>%
        caption = "Källa: Danmarks Statistik",
        x = "",
        y = "Antal")
-
+ggiraph::girafe(ggobj = mot_barn)
 ```
 
 ```{r våldsbrott}
