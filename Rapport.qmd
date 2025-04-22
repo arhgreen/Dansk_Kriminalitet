@@ -256,11 +256,6 @@ Enligt Danmarks Statistik låg den genomsnittliga arbetslösheten i landet på 2
 ```
 
 ```{r arbetslöshet}
-skyldig_kön_ålder_socialekonomisk %>%
-  ggplot(aes(x = År,
-             y = Skyldiga)) +
-  geom_line(colour = Statu)
-  
   
 ```
 
