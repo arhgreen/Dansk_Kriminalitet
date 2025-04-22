@@ -34,8 +34,9 @@ library(ggiraph) #plot interactivity
 library(plotly)
 library(patchwork) #side by side plots
 library(reactablefmtr)
-```
+library(reshape2)
 
+```
 
 ```{r source_data_prep}
 source("RawData/data_prep.R")
@@ -189,7 +190,6 @@ anmälda_åtalade_region %>%
   
 ```
 
-
 ```{r brottcategoriernas_utveckling}
 ## Förändring från 2023-2024
 
@@ -251,20 +251,16 @@ Forskning har visat att det finns ett starkt samband mellan socioekonomiska fakt
 
 Enligt Danmarks Statistik låg den genomsnittliga arbetslösheten i landet på 2,8 % i januari 2024, vilket är en liten ökning från 2,6 % i januari 2023 (dst.dk). Ungdomsarbetslösheten (15–24 år) har däremot varit högre och låg 2023 på omkring 9 %, vilket indikerar en utsatt grupp med ökad sårbarhet för rekrytering till kriminella nätverk. Utsatthet som inkörsport till kriminalitet
 
-```{r arbetslöshet}
-test <- arbetslösa_ålder_kön_region %>% 
-  mutate(År = as.character(År))
-test <- test %>% 
-  mutate(År = as.Date(År, format = "%m-%Y"))
+```{r}
 
-#vec <- c("Nov - 16", "Apr - 18")
-#(o1 <- as.Date(paste("01", vec), format = "%d %b - %y"))
-# [1] "2016-11-01" "2018-04-01"
-#(o2 <- lubridate::dmy(paste("01", vec)))
-# [1] "2016-11-01" "2018-04-01"
-#(o3 <- zoo::as.yearmon(vec, "%b - %y"))
-# [1] "Nov 2016" "Apr 2018"
-#https://stackoverflow.com/questions/63108628/convert-a-column-having-abbreviated-month-year-format-to-date-type  
+```
+
+```{r arbetslöshet}
+skyldig_kön_ålder_socialekonomisk %>%
+  ggplot(aes(x = År,
+             y = Skyldiga)) +
+  geom_line(colour = Statu)
+  
   
 ```
 
