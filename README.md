@@ -1,10 +1,6 @@
 # 🇩🇰 Analys av Dansk Kriminalpolitik  
 **En evidensbaserad granskning av kriminalpolitikens påverkan på brott, rättsväsende och samhällsklimat**
 
-<div align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Coat_of_arms_of_Denmark.svg" height="70" />
-</div>
-
 ---
 
 ## 🧠 Syfte och Bakgrund
