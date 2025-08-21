@@ -54,6 +54,7 @@ arbetslösa_ålder_kön_region <- read_rds("Data/arbetslösa_ålder_kön_region.
 ```
 
 # Sammanfattning {.unlisted}
+
 Denna rapport analyserar de bakomliggande skälen till att Sverige i ökande utsträckning orienterar sig mot Danmark i syfte att identifiera verktyg för att motverka gängkriminalitet och grov våldsbrottslighet. Vidare redovisas de resultat, kostnader och risker som de danska åtgärderna hittills genererat.
 
 Tillgängliga jämförande källor visar att Danmark under perioden 2010–2024 uppvisat en nedåtgående trend inom flera kategorier av egendomsbrott, särskilt inbrott. Samtidigt har utvecklingen för anmälda sexualbrott samt vissa våldsbrott uppvisat en mer varierad karaktär. Under denna tidsperiod har Danmark genomfört flera så kallade bandepakker, skärpt straff för gängrelaterad brottslighet, infört straffskärpningszoner, tillämpat visitationszoner samt i ökad omfattning nyttjat hemarrest med elektronisk övervakning.
@@ -71,6 +72,36 @@ Under det senaste decenniet har dansk kriminalpolitik fått ett allt större gen
 Men vad ligger bakom detta intensiva intresse? Är det Danmarks upplevda effektivitet som lockar, eller är det snarare ett uttryck för en svensk längtan efter kontroll i en tid av samhällsförändring och ökad otrygghet? Och kanske viktigast av allt – har den danska modellen verkligen haft positiva effekter?
 
 Denna rapport syftar till att nyanserat och evidensbaserat undersöka just detta: i vilken utsträckning har Danmarks kriminalpolitiska linje påverkat brottsutvecklingen, rättsväsendets funktion och samhällsklimatet? Genom att kombinera statistik, policyanalyser och aktuell forskning granskas den danska strategin – inte som idealbild, utan som föremål för kritisk analys. Särskild uppmärksamhet ägnas åt de specifika åtgärderna som Danmark genomfört, såsom tuffare strafflagstiftning, utökad användning av preventiv frihetsberövning och intensifierad gränskontroll, för att bedöma om dessa politiska val har lett till en verklig minskning av brottsligheten eller om de enbart har skapat ett illusion av ökad trygghet.
+
+# Metoder och Källor 
+
+Rapporten bygger på officiell statistik och publikationer från Danmarks Statistik (DST), Rigspolitiet, Justitsministeriet, Kriminalforsorgen, Institut for Menneskerettigheder, samt dansk och svensk propositions- och lagstiftningsdokumentation. Därutöver inkluderas utvärderingar och forskningsöversikter (Rockwool Fonden n.fl.).
+
+# Policyöversikt: Vad består den "danska modellen" av?
+
+-   "Bandepakker": Politiska paket som succesivt skärpt straffen för gängrelaterade brott, infört skärpningsregler i särskilda zoner, utökat verktyg för beslag och ekonomisk brottsbekämpning, samt stärkt polisens operativa möjligheter.
+
+-   Visitationszoner: Tidsbegränsade, geografiskt avgränsade områden där polis kan visitera utan konkret brottsmisstanke, i preventivt syfte.
+
+-   Straffskärpningszoner: Dubbla straff eller särpta straffskalor i utpekade områden vid gängkonflikt.
+
+-   Förstärkt ekonomisk brottsbekämpning: Betoning på penningstvätt, databedrägerier och "money-mules" kopplat till gängens finansiering.
+
+-   Elektronisk fotboja/hemarrest: Ökad användning för att avlasta anstaltskapacitet och skapa kontroll vid verkställighet och vissa frihetsinskränkningar.
+
+-   Ungdomsspåret: Nya institutionella lösningar (bl.a. Ungdomskriminalitetsnævnet) och särskilda sanktioner som kombinerar kontroll och sociala insatser.
+
+## Tidslinje i korthet. 
+
+```{r tidslinje}
+tidslinje <- data.frame(År = c("2017-2018", "2019", "2021-2023", "2023-2024"),
+                        Händelse = c("Första bandepakke med skärpta straff och visitationszoner", "Ungdomsspåret etableras med Ungdomskriminalitetsnævnet", "Andra bandepakke med fokus på ekonomisk brottsbekämpning", "Fortsatta skäpningar och riktade insatser mot konfliktdrivna miljöer"))
+library(kableExtra)
+tidslinje %>% 
+  kbl(caption = "Dansk kriminalpolitik: centrala reformer 2017–2024") %>% 
+  kable_classic(full_width = F, 
+                   html_font = "Arial")
+```
 
 # Sveriges intresse för danska metoder
 

@@ -17,3 +17,5 @@ plotly
 patchwork
 reshape2
 readxl
+vistime
+kableExtra
