@@ -121,10 +121,9 @@ Sammanfattningsvis kan Sveriges intresse för de danska kriminalpolitiska metode
 
 Danmark har uppvisat en övergripande nedgång i antalet anmälda brott, vilket ofta tillskrivs landets strikta kriminalpolitik. Enligt Danmarks Statistik minskade antalet anmälda brott med 17 procent mellan 2009 och 2019 (Newsoresund, 2023). Samtidigt har vissa brottstyper ökat. Antalet anmälningar om sexualbrott steg med 16 procent under 2019 jämfört med föregående år, där våldtäktsanmälningarna ökade med 88 procent (SvD, 2020). Forskare som utvärderat effekterna av sänkningen av straffmyndighetsåldern till 14 år 2010, följt av en återställning till 15 år 2012, noterar att ungdomsbrottsligheten ökade snarare än minskade under perioden med sänkt straffålder (SVT, 2013).
 
-```{r}
+```{r anmälningar_åtalade, fig.cap = "Brottsstatistik per region i Danmark", fig.align='left', out.width='90%'}
 #| label: tbl-anmälda_åtalade
-#| fig-cap: "Brottsstatistik per region i Danmark"
-#| fig-align: "left"
+
 #ANTAL ANMÄLNINGAR OCH ÅTAL PER REGION 
 anmälda_åtalade_region %>% 
   mutate(Händelse = factor(Händelse,
