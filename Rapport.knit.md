@@ -141,7 +141,7 @@ Danmark har uppvisat en övergripande nedgång i antalet anmälda brott, vilket 
 
 
 
-::: {#tbl-anmälda_åtalade .cell layout-align="left"}
+::: {.cell layout-align="left"}
 ::: {.cell-output-display}
 
 ```{=html}
