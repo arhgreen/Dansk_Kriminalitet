@@ -278,19 +278,12 @@ Eftersom arbetslösheten i vissa svenska utsatta områden är betydligt högre �
 
 Enligt Danmarks Statistik låg den genomsnittliga arbetslösheten i landet på 2,8 % i januari 2024, vilket är en liten ökning från 2,6 % i januari 2023 (dst.dk). Ungdomsarbetslösheten (15–24 år) har däremot varit högre och låg 2023 på omkring 9 %, vilket indikerar en utsatt grupp med ökad sårbarhet för rekrytering till kriminella nätverk. Utsatthet som inkörsport till kriminalitet
 
-```{r}
-
-```
-
-```{r arbetslöshet}
-  
-```
 
 Studier från Rockwool Fonden och Kriminalforsorgen i Danmark har visat att:
 
 Personer med låg utbildning, svag anknytning till arbetsmarknaden och som bor i socioekonomiskt utsatta bostadsområden löper betydligt högre risk att bli inblandade i kriminalitet. En arbetslös ungdom i ett socioekonomiskt belastat område har upp till fyra gånger högre risk att rekryteras till gäng än en sysselsatt individ med stabil familjebakgrund (rockwoolfonden.dk).
 
-## 
+
 
 # Brottsförebyggande åtgärder
 
